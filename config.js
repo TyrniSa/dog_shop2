@@ -1,5 +1,7 @@
 module.exports = {
   PORT: process.env.PORT,
+  SERVER_URL: process.env.SERVER_URL,
+  CLIENT_URL: process.env.CLIENT_URL,
   DB: {
     PGHOST: process.env.PGHOST,
     PGUSER: process.env.PGUSER,
@@ -7,5 +9,5 @@ module.exports = {
     PGPASSWORD: process.env.PGPASSWORD,
     PGPORT: process.env.PGPORT
   },
-  SESSION_SECRET: process.env.SESSION_SECRET
+  SECRET: process.env.SECRET
 }

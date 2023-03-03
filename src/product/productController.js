@@ -1,5 +1,5 @@
 const pool = require('../../db');
-const queries = require('./queries');
+const queries = require('./productQueries');
 
 const getProducts = (req, res) => {
   pool.query(queries.getProducts, (error, results) =>{
