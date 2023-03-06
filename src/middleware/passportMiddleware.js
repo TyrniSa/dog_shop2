@@ -2,7 +2,7 @@ const passport = require('passport');
 const { Strategy } = require('passport-jwt');
 const { SECRET } = require('../../config');
 const db = require('../../db');
-const queries = require('../auth/authQueries');
+const queries = require('../queries/authQueries');
 
 const cookeExtractor = function (req) {
   let token = null;
