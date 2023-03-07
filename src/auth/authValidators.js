@@ -4,18 +4,18 @@ const queries = require('../queries/authQueries');
 const bc = require('bcryptjs');
 
 //password
-const password = check('password').isLength({min: 6, max: 15})
-.withMessage('Password needs to be between 6 and 15 characters.');
+const password = check('password').isLength({ min: 6, max: 15 })
+  .withMessage('Password needs to be between 6 and 15 characters.');
 
 //email
 const email = check('email').isEmail()
-.withMessage('Please provide a valid email.');
+  .withMessage('Please provide a valid email.');
 
 //check if email exists
 const emailExists = check('email').custom(async (email) => {
-  const {rows} = await db.query(queries.emailExists, [email]);
+  const { rows } = await db.query(queries.emailExists, [email]);
 
-  if(rows.length){
+  if (rows.length) {
     throw new Error('Email already exists.');
   }
 });
@@ -23,12 +23,12 @@ const emailExists = check('email').custom(async (email) => {
 //login validation
 const loginFields = check('email').custom(async (email, { req }) => {
   const user = await db.query(queries.emailExists, [email])
-  if(!user.rows.length){
+  if (!user.rows.length) {
     throw new Error('Email does not exist.');
   };
 
   const validPassword = await bc.compare(req.body.password, user.rows[0].password);
-  if(!validPassword){
+  if (!validPassword) {
     throw new Error('Wrong password.');
   };
 

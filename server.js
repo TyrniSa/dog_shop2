@@ -22,11 +22,11 @@ const orderRoutes = require('./src/routes/orderRoutes');
 const authRoutes = require('./src/routes/authRoutes');
 
 //initialize routes
-app.get("/", (req,res) => {res.send("Welcome to dog app!")});
-app.use('/api/products', productRoutes);
-app.use('/api/carts', cartRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/auth', authRoutes);
+app.get("/", (req, res) => { res.send("Welcome to dog app!") });
+app.use('/products', productRoutes);
+app.use('/carts', cartRoutes);
+app.use('/orders', orderRoutes);
+app.use('/auth', authRoutes);
 
 //app listen
 app.listen(PORT, () => console.log(`app listening on port ${PORT}`));

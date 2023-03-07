@@ -1,6 +1,7 @@
 const pool = require('../../db');
 const queries = require('../queries/cartQueries');
 
+//get cart by matching id
 const getCartByCartid = (req, res) => {
   const id = parseInt(req.params.id);
   pool.query(queries.getCartById, [id], (error, results) => {
@@ -9,6 +10,7 @@ const getCartByCartid = (req, res) => {
   });
 };
 
+//get carts by matching userid
 const getCartByUserid = (req, res) => {
   const id = parseInt(req.params.id);
   pool.query(queries.getCartByUserid, [id], (error, results) => {
@@ -17,6 +19,7 @@ const getCartByUserid = (req, res) => {
   });
 };
 
+//post cart
 const addCart = (req, res) => {
   const { userid } = req.body;
   //add Cart to db
@@ -27,6 +30,7 @@ const addCart = (req, res) => {
   });
 };
 
+//delete cart
 const deleteCart = (req, res) => {
   const id = parseInt(req.params.id);
   pool.query(queries.findCart, [id], (error, results) => {
@@ -42,6 +46,7 @@ const deleteCart = (req, res) => {
   });
 };
 
+//add cartitem to a cart
 const addProductToCart = (req, res) => {
   const cartid = parseInt(req.params.id);
   const { productid, qty } = req.body;
@@ -53,6 +58,7 @@ const addProductToCart = (req, res) => {
   });
 };
 
+//put cartitem quantity in an existing cartitem
 const editProductQtyInCart = (req, res) => {
   const cartid = parseInt(req.params.cartid);
   const id = parseInt(req.params.id);
@@ -71,6 +77,7 @@ const editProductQtyInCart = (req, res) => {
   });
 };
 
+//delete cartitem
 const deleteProductFromCart = (req, res) => {
   const cartid = parseInt(req.params.cartid);
   const id = parseInt(req.params.id);
@@ -88,6 +95,8 @@ const deleteProductFromCart = (req, res) => {
   });
 };
 
+//"checkout" no existing checkout, this method counts a total to cartitems and posts a new order to
+//orders -table
 const checkout = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -99,7 +108,7 @@ const checkout = (req, res) => {
     } else {
       pool.query(queries.getCartById, [id], (error, results) => {
         if (error) throw error;
-  
+
         let total = 0;
         for (let i = 0; i < results.rows.length; i++) {
           total += parseFloat(results.rows[i].price);
@@ -117,27 +126,6 @@ const checkout = (req, res) => {
   });
 };
 
-// const getCartTotalByCartid = (req, res) => {
-//   const id = parseInt(req.params.id);
-
-//   pool.query(queries.findCart, [id], (error, results) => {
-//     const noCart = !results.rows.length;
-//     if (noCart) {
-//       res.send("No cart with this id, could not count total");
-//     } else {
-//       pool.query(queries.getCartById, [id], (error, results) => {
-//         if (error) throw error;
-//         let total = 0;
-//         for (let i=0; i<results.rows.length; i++){
-//           total += parseFloat(results.rows[i].price);
-//         }
-//         console.log(total);
-//         res.status(200).json({"total": total});
-//       });
-//     }
-//   });
-// };
-
 module.exports = {
   getCartByCartid,
   getCartByUserid,
@@ -147,5 +135,4 @@ module.exports = {
   editProductQtyInCart,
   deleteProductFromCart,
   checkout
-  // getCartTotalByCartid
 };
