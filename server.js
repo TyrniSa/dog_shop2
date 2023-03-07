@@ -17,14 +17,16 @@ app.use(passport.initialize());
 
 //import routes
 const productRoutes = require('./src/routes/productRoutes');
-const authRoutes = require('./src/routes/authRoutes');
 const cartRoutes = require('./src/routes/cartRoutes');
+const orderRoutes = require('./src/routes/orderRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 
 //initialize routes
 app.get("/", (req,res) => {res.send("Welcome to dog app!")});
 app.use('/api/products', productRoutes);
-app.use('/api/auth', authRoutes);
 app.use('/api/carts', cartRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/auth', authRoutes);
 
 //app listen
 app.listen(PORT, () => console.log(`app listening on port ${PORT}`));
