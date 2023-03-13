@@ -4,7 +4,7 @@ const { SECRET } = require('../../config');
 const db = require('../../db');
 const queries = require('../queries/authQueries');
 
-const cookeExtractor = function (req) {
+const cookieExtractor = function (req) {
   let token = null;
   if (req && req.cookies) token = req.cookies['token']
   return token;
@@ -12,7 +12,7 @@ const cookeExtractor = function (req) {
 
 const opts = {
   secretOrKey: SECRET,
-  jwtFromRequest: cookeExtractor,
+  jwtFromRequest: cookieExtractor,
 }
 
 passport.use(
