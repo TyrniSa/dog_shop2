@@ -117,7 +117,7 @@ const logoutUser = async (req, res) => {
 const getProtected = (req, res) => {
   try {
     return res.status(200).json({
-      info: 'protected info',
+      info: 'Your userpage',
     })
   } catch (error) {
     console.log(error.message);

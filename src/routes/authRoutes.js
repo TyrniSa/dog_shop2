@@ -13,6 +13,6 @@ router.put('/users/:id', userAuth, controller.updateUser);
 router.delete('/users/:id', controller.deleteUser);
 router.post('/register', registerValidation, validationMiddleware, controller.registerUser);
 router.post('/login', loginValidation, validationMiddleware, controller.loginUser);
-router.get('/logout', userAuth, controller.logoutUser);
+router.get('/logout', controller.logoutUser);
 
 module.exports = router;
