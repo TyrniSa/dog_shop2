@@ -20,9 +20,9 @@ const getProductById = (req, res) => {
 
 //post product
 const addProduct = (req, res) => {
-  const { name, price, description } = req.body;
+  const { name, price, description, sex, age } = req.body;
   //add product to db
-  pool.query(queries.addProduct, [name, price, description], (error, results) => {
+  pool.query(queries.addProduct, [name, price, description, sex, age], (error, results) => {
     if (error) throw error;
 
     res.status(201).send('Product created');
@@ -48,14 +48,14 @@ const deleteProduct = (req, res) => {
 //put product
 const updateProduct = (req, res) => {
   const id = parseInt(req.params.id);
-  const { name, price, description } = req.body;
+  const { name, price, description, sex, age } = req.body;
 
   pool.query(queries.getProductById, [id], (error, results) => {
     const noProduct = !results.rows.length;
     if (noProduct) {
       res.send("No product found with this id, could not update product");
     } else {
-      pool.query(queries.updateProduct, [name, price, description, id], (error, results) => {
+      pool.query(queries.updateProduct, [name, price, description, sex, age, id], (error, results) => {
         if (error) throw error;
         res.status(200).send('Product Updated');
       });

@@ -7,10 +7,13 @@
 // } from 'react-router-dom';
 // import Home from './pages/home';
 // import Dashboard from './pages/dashboard';
-// import Register from './pages/register';
-// import Login from './pages/login';
 // import { useSelector } from 'react-redux';
 import Home from './pages/Home.jsx';
+import ProductList from './pages/ProductList.jsx';
+import Product from './pages/Product.jsx';
+import Register from './pages/Register.jsx';
+import Login from './pages/Login.jsx';
+import Cart from './pages/Cart.jsx';
 
 // const PrivateRoutes = () => {
 //   const {isAuth} = useSelector(state => state.auth);

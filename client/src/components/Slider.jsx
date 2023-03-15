@@ -2,6 +2,7 @@ import { KeyboardArrowLeftOutlined, KeyboardArrowRightOutlined } from "@mui/icon
 import { useState } from "react";
 import styled from "styled-components"
 import { sliderItems } from "../data";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
 margin-top:10px;
@@ -10,6 +11,7 @@ margin-top:10px;
   display: flex;
   position: relative;
   overflow: hidden;
+  ${mobile({display: "none"})};
 `
 
 const Arrow = styled.div`
