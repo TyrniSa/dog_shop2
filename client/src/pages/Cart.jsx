@@ -35,15 +35,6 @@ const TopButton = styled.button`
   color: ${(props) => props.type === "filled" && "white"};
 `;
 
-
-const TopTexts = styled.div`${mobile({ display: "none" })}`;
-
-const TopText = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 0px 10px;
-`;
-
 const Bottom = styled.div`
 display: flex;
 justify-content: space-between;
@@ -155,10 +146,6 @@ const Cart = () => {
         <Title>YOUR CART</Title>
         <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
-          </TopTexts>
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>

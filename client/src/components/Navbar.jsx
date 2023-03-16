@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Search, ShoppingCartOutlined } from '@mui/icons-material';
 import Badge from '@mui/material/Badge';
 import { mobile } from "../responsive";
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   height: 60px;
@@ -58,20 +59,32 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `
 
+const NavbarLink = styled(Link)`
+ color:black;
+ text-decoration: none;
+&:hover,
+&:focus{
+    color: #199494;
+}
+&:active{
+    color: #255a5a;
+};`
+
 const Navbar = () => {
   return (
     <Container>
       <Wrapper>
         <Left>
+        <NavbarLink to="/products"><MenuItem>DOGS</MenuItem></NavbarLink>
           <SearchContainer>
             <Input placeholder="Search"/>
             <Search style={{color: "gray", fontSize: 16}}/>
           </SearchContainer>
         </Left>
-        <Center><Logo>DOG STORE</Logo></Center>
+        <Center><NavbarLink to="/"><Logo>DOG STORE</Logo></NavbarLink></Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
+        <NavbarLink to="/register"><MenuItem>REGISTER</MenuItem></NavbarLink>
+        <NavbarLink to="/login"><MenuItem>SIGN IN</MenuItem></NavbarLink>
           <MenuItem>
             <Badge color="success" badgeContent={4}>
               <ShoppingCartOutlined />

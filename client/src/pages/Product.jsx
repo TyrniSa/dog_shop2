@@ -1,8 +1,11 @@
 import { Add, Remove } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from '../components/Announcement.jsx';
 import Footer from '../components/Footer.jsx';
 import Navbar from '../components/Navbar.jsx';
+import { publicRequest } from "../requestMethods.js";
 import { mobile } from "../responsive";
 
 const Container = styled.div``;
@@ -83,28 +86,50 @@ const Button = styled.button`
 
 
 const Product = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/products/" + id);
+        setProduct(res.data[0]);
+      } catch {}
+    };
+    getProduct();
+  }, [id]);
+
+  const handleQuantity = (type) =>{
+    if(type==="dec"){
+      quantity > 1 && setQuantity(quantity-1);
+    }else {
+      setQuantity(quantity+1);
+    };
+  };
+
   return (
     <Container>
       <Announcement />
       <Navbar />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://viipurinkoirat.fi/sites/default/files/styles/thumbnail/public/field/kuvat/mirtha-etu.jpg?itok=AbjnRdau" />
+          <Image src={product.img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>Mirtha</Title>
+          <Title>{product.name}</Title>
           <Desc>
-            Sex: Female<br/>
-            Age: Senior<br/>
-            Mirtha sterilisoitiin Viipurin Koirien tuella Aurika-klinikalla.
-            Siitä otettiin samalla röntgenkuva, joka paljasti, että Mirthalla on lantiossa vanha vamma.
-          </Desc>
-          <Price>20€</Price>
+            Sex: {product.sex}<br/>
+            Age: {product.age}<br/>
+            {product.description}
+            </Desc>
+          <Price>{product.price} €</Price>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove onClick={()=>handleQuantity("dec")} />
+              <Amount>{quantity}</Amount>
+              <Add onClick={()=>handleQuantity("inc")}/>
             </AmountContainer>
             <Button>ADD TO CART</Button>
           </AddContainer>

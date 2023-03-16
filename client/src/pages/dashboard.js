@@ -31,7 +31,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     protectedInfo()
-  }, []);
+  },[]
+  );
 
   return loading ? (
     <Layout>
