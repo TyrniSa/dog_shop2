@@ -56,6 +56,17 @@ transition:all 0.5s ease;
 }
 `
 
+const IconLink = styled(Link)`
+ color:black;
+ text-decoration: none;
+&:hover,
+&:focus{
+    color: #199494;
+}
+&:active{
+    color: #255a5a;
+};`
+
 
 const Product = ({ item }) => {
   return (
@@ -66,7 +77,7 @@ const Product = ({ item }) => {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-        <Link to={`/product/${item.id}`}><SearchOutlined /></Link>
+        <IconLink to={`/product/${item.id}`}><SearchOutlined /></IconLink>
         </Icon>
       </Info>
     </Container>
