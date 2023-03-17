@@ -18,7 +18,19 @@ const getOrderById = (req, res) => {
   });
 };
 
+//post order
+const addOrder = (req, res) => {
+  const { total, userid } = req.body;
+  //add order to db
+  pool.query(queries.addOrder, [total, userid], (error, results) => {
+    if (error) throw error;
+
+    res.status(201).send('order created');
+  });
+};
+
 module.exports = {
   getOrders,
   getOrderById,
+  addOrder
 };

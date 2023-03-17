@@ -8,6 +8,7 @@ import Login from './pages/Login.jsx';
 import Cart from './pages/Cart.jsx';
 import Dashboard from './pages/dashboard';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import Success from './pages/Success.jsx';
 
 const PrivateRoutes = () => {
   const { isAuth } = useSelector(state => state.auth);
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='/products' element={<ProductList />} />
         <Route path='/product/:id' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/success' element={<Success />} />
         <Route element={<RestrictedRoutes />}>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />

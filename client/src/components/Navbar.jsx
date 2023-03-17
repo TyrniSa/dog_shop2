@@ -73,7 +73,6 @@ const NavbarLink = styled(Link)`
 
 const Navbar = () => {
   const quantity = useSelector(state=>state.cart.quantity)
-  console.log(quantity)
   return (
     <Container>
       <Wrapper>

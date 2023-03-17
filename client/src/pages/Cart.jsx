@@ -5,6 +5,12 @@ import Announcement from '../components/Announcement.jsx';
 import Footer from '../components/Footer.jsx';
 import Navbar from '../components/Navbar.jsx';
 import { mobile } from "../responsive";
+import StripeCheckout from 'react-stripe-checkout';
+import { useEffect, useState } from "react";
+import { userRequest } from "../requestMethods.js";
+import { useNavigate } from "react-router-dom";
+
+const KEY = "pk_test_51MmbhCIGIsRpz8undo1KGABiH5NqJ11Rih7EBtvPMjnpDTuaZUaxQrHq2L8KHPIs3zakqLqqjlTrwkJ9Ptfs8zDt009h0fdwAt";
 
 const Container = styled.div`
 `;
@@ -30,10 +36,7 @@ const TopButton = styled.button`
   padding: 10px;
   font-weight: 600;
   cursor: pointer;
-  border: ${(props) => props.type === "filled" && "none"};
-  background-color: ${(props) =>
-    props.type === "filled" ? "black" : "transparent"};
-  color: ${(props) => props.type === "filled" && "white"};
+  background-color: "transparent";
 `;
 
 const Bottom = styled.div`
@@ -139,7 +142,26 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
-  const cart = useSelector(state=>state.cart);
+  const cart = useSelector((state) => state.cart);
+  const [stripeToken, setStripeToken] = useState(null);
+  const navigate = useNavigate();
+
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: 440,
+        });
+        navigate("/success", {state: {stripeData: res.data}});
+      } catch {}
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken, cart, navigate]);
 
   return (
     <Container>
@@ -149,35 +171,34 @@ const Cart = () => {
         <Title>YOUR CART</Title>
         <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Info>
-            {cart.products.map(product=>(
-              <Product>
-              <ProductDetail>
-                <Image src={product.img} />
-                <Details>
-                  <DogName>
-                    <b>Dog:</b> {product.name}
-                  </DogName>
-                  <DogSex>
-                    <b>Sex:</b> {product.sex}
-                  </DogSex>
-                  <DogAge>
-                    <b>Age:</b> {product.age}
-                  </DogAge>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Remove />
-                  <ProductAmount>{product.quantity}</ProductAmount>
-                  <Add />
-                </ProductAmountContainer>
-                <ProductPrice>{product.price*product.quantity} €</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cart.products.map(product => (
+              <Product key={product.id}>
+                <ProductDetail>
+                  <Image src={product.img} />
+                  <Details>
+                    <DogName>
+                      <b>Dog:</b> {product.name}
+                    </DogName>
+                    <DogSex>
+                      <b>Sex:</b> {product.sex}
+                    </DogSex>
+                    <DogAge>
+                      <b>Age:</b> {product.age}
+                    </DogAge>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Remove />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <Add />
+                  </ProductAmountContainer>
+                  <ProductPrice>{product.price * product.quantity} €</ProductPrice>
+                </PriceDetail>
+              </Product>
             ))}
             <Hr />
           </Info>
@@ -187,7 +208,18 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>{cart.total} €</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <StripeCheckout
+              name="DOG STORE"
+              image="https://imgur.com/rTtvFOi.png"
+              billingAddress
+              shippingAddress
+              description={`Your total is ${cart.total} €`}
+              amount={cart.total * 100}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <Button>CHECKOUT NOW</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>

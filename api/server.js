@@ -20,6 +20,7 @@ const productRoutes = require('./src/routes/productRoutes');
 const cartRoutes = require('./src/routes/cartRoutes');
 const orderRoutes = require('./src/routes/orderRoutes');
 const authRoutes = require('./src/routes/authRoutes');
+const stripeRoute = require("./src/routes/stripe");
 
 //initialize routes
 app.get("/", (req, res) => { res.send("Welcome to dog app!") });
@@ -27,7 +28,7 @@ app.use('/products', productRoutes);
 app.use('/carts', cartRoutes);
 app.use('/orders', orderRoutes);
 app.use('/auth', authRoutes);
-
+app.use("/checkout", stripeRoute);
 
 //app listen
 app.listen(PORT, () => console.log(`app listening on port ${PORT}`));
