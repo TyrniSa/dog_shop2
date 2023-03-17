@@ -7,9 +7,7 @@ import { userRequest } from "../requestMethods";
 const Success = () => {
   const location = useLocation();
   const data = location.state.stripeData;
-  // const cart = location.state.cart;
-  const cart = useSelector((state) => state.cart);
-  console.log(data);
+  const cart = location.state.cart;
   // const currentUser = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
@@ -20,7 +18,6 @@ const Success = () => {
           userid: 2,
           total: cart.total,
         });
-        console.log(res);
       } catch {}
     };
     data && createOrder();
