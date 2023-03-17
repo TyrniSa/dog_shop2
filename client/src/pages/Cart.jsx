@@ -1,4 +1,5 @@
 import { Add, Remove } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from '../components/Announcement.jsx';
 import Footer from '../components/Footer.jsx';
@@ -138,6 +139,8 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const cart = useSelector(state=>state.cart);
+
   return (
     <Container>
       <Announcement />
@@ -150,61 +153,39 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
+            {cart.products.map(product=>(
+              <Product>
               <ProductDetail>
-                <Image src="https://viipurinkoirat.fi/sites/default/files/styles/fullsize/public/field/kuvat/miron-11.jpg?itok=z7Rvo1Xm" />
+                <Image src={product.img} />
                 <Details>
                   <DogName>
-                    <b>Dog:</b> Miron
+                    <b>Dog:</b> {product.name}
                   </DogName>
                   <DogSex>
-                    <b>Sex:</b> male
+                    <b>Sex:</b> {product.sex}
                   </DogSex>
                   <DogAge>
-                    <b>Age:</b> adult
+                    <b>Age:</b> {product.age}
                   </DogAge>
                 </Details>
               </ProductDetail>
               <PriceDetail>
                 <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
                   <Remove />
+                  <ProductAmount>{product.quantity}</ProductAmount>
+                  <Add />
                 </ProductAmountContainer>
-                <ProductPrice>20 €</ProductPrice>
+                <ProductPrice>{product.price*product.quantity} €</ProductPrice>
               </PriceDetail>
             </Product>
+            ))}
             <Hr />
-            <Product>
-              <ProductDetail>
-                <Image src="https://viipurinkoirat.fi/sites/default/files/styles/fullsize/public/field/kuvat/sheriff2.jpg?itok=bX8WZJio" />
-                <Details>
-                  <DogName>
-                    <b>Dog:</b> Sheriff
-                  </DogName>
-                  <DogSex>
-                    <b>Sex:</b> male
-                  </DogSex>
-                  <DogAge>
-                    <b>Age:</b> senior
-                  </DogAge>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>40 €</ProductPrice>
-              </PriceDetail>
-            </Product>
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>80 €</SummaryItemPrice>
+              <SummaryItemPrice>{cart.total} €</SummaryItemPrice>
             </SummaryItem>
             <Button>CHECKOUT NOW</Button>
           </Summary>

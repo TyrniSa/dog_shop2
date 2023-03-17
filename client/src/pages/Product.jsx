@@ -5,8 +5,10 @@ import styled from "styled-components";
 import Announcement from '../components/Announcement.jsx';
 import Footer from '../components/Footer.jsx';
 import Navbar from '../components/Navbar.jsx';
+import { addProduct } from "../redux/slices/cartRedux.js";
 import { publicRequest } from "../requestMethods.js";
 import { mobile } from "../responsive";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div``;
 
@@ -90,6 +92,7 @@ const Product = () => {
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -101,12 +104,18 @@ const Product = () => {
     getProduct();
   }, [id]);
 
-  const handleQuantity = (type) =>{
-    if(type==="dec"){
-      quantity > 1 && setQuantity(quantity-1);
-    }else {
-      setQuantity(quantity+1);
-    };
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const handleClick = () => {
+    dispatch(
+      addProduct({ ...product, quantity })
+    );
   };
 
   return (
@@ -131,7 +140,7 @@ const Product = () => {
               <Amount>{quantity}</Amount>
               <Add onClick={()=>handleQuantity("inc")}/>
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

@@ -2,7 +2,7 @@ export const sliderItems = [
   {
     id: 1,
     img: "https://viipurinkoirat.fi/sites/default/files/styles/thumbnail/public/field/kuvat/samuli5.jpg?itok=wbM9TeET",
-    title: "SEARCH FOR DOGS IN FINLAND",
+    title: "FINNISH DOGS",
     desc: "These dogs are already in Finland, needing home.",
     bg: "f5fafd",
   },
@@ -16,8 +16,8 @@ export const sliderItems = [
   {
     id: 3,
     img: "https://viipurinkoirat.fi/sites/default/files/styles/thumbnail/public/field/kuvat/Fedja11.jpg?itok=L4rylo-8",
-    title: "SENIOR DOGS NEED LOVE TOO",
-    desc: "Please consider giving a home.",
+    title: "SENIOR DOGS",
+    desc: "They need love too, please consider giving a home.",
     bg: "fbf0f4",
   },
 ];
