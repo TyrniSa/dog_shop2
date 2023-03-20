@@ -14,3 +14,7 @@ export const login = async (dispatch, user) => {
 export async function logoutUser() {
   return await  publicRequest.get('/auth/logout')
 };
+
+export async function onRegistration(registrationData) {
+  return await publicRequest.post('/auth/register', registrationData)
+};

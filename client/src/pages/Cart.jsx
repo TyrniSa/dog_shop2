@@ -1,5 +1,5 @@
 import { Add, Remove } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from '../components/Announcement.jsx';
 import Footer from '../components/Footer.jsx';
@@ -8,7 +8,8 @@ import { mobile } from "../responsive";
 import StripeCheckout from 'react-stripe-checkout';
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { clearCart, increase, decrease, removeProduct } from "../redux/slices/cartSlice.js";
 
 const KEY = "pk_test_51MmbhCIGIsRpz8undo1KGABiH5NqJ11Rih7EBtvPMjnpDTuaZUaxQrHq2L8KHPIs3zakqLqqjlTrwkJ9Ptfs8zDt009h0fdwAt";
 
@@ -61,7 +62,7 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  width: 250px;
+  height: 200px;
 `;
 
 const Details = styled.div`
@@ -81,7 +82,7 @@ const PriceDetail = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
   justify-content: center;
 `;
 
@@ -141,7 +142,39 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
+const RemoveButton = styled.button`
+  width: 30%;
+  height: 40px;
+  padding: 10px;
+  background-color: #344949;
+  color: white;
+  font-weight: 600;
+  margin-top:10px;
+`;
+
+
+const ClearButton = styled.button`
+margin-top:10px;
+  width: 100%;
+  padding: 10px;
+  color: black;
+  background-color: white;
+  font-weight: 600;
+`;
+
+const ButtonLink = styled(Link)`
+ color:black;
+ text-decoration: none;
+&:hover,
+&:focus{
+    color: #199494;
+}
+&:active{
+    color: #255a5a;
+};`
+
 const Cart = () => {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
@@ -170,7 +203,7 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR CART</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <TopButton><ButtonLink to="/products">CONTINUE SHOPPING</ButtonLink></TopButton>
         </Top>
         <Bottom>
           <Info>
@@ -189,15 +222,19 @@ const Cart = () => {
                       <b>Age:</b> {product.age}
                     </DogAge>
                   </Details>
+                  
                 </ProductDetail>
                 <PriceDetail>
-                  <ProductAmountContainer>
-                    <Remove />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Add />
+                
+                  <ProductAmountContainer>   
+              <Remove onClick={()=>{product.quantity > 0 && dispatch(decrease({id: product.id}))}}/>
+              <ProductAmount>{product.quantity}</ProductAmount>
+              <Add onClick={()=>{dispatch(increase({id: product.id}))}}/>
                   </ProductAmountContainer>
                   <ProductPrice>{product.price * product.quantity} €</ProductPrice>
+                  <RemoveButton onClick={()=>{dispatch(removeProduct(product.id))}}>REMOVE</RemoveButton>
                 </PriceDetail>
+                
               </Product>
             ))}
             <Hr />
@@ -220,6 +257,7 @@ const Cart = () => {
             >
               <Button>CHECKOUT NOW</Button>
             </StripeCheckout>
+              <ClearButton onClick={()=>{dispatch(clearCart())}}>CLEAR CART</ClearButton>
           </Summary>
         </Bottom>
       </Wrapper>

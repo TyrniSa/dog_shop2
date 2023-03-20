@@ -1,26 +1,28 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import { clearCart } from "../redux/slices/cartSlice";
 import { userRequest } from "../requestMethods";
 
 const Success = () => {
   const location = useLocation();
   const data = location.state.stripeData;
   const cart = location.state.cart;
-  // const currentUser = useSelector((state) => state.user.currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const createOrder = async () => {
       try {
         const res = await userRequest.post("/orders", {
-          // userid: currentUser._id,
-          userid: 2,
+          userid: currentUser.id,
           total: cart.total,
         });
       } catch {}
     };
     data && createOrder();
+    dispatch(clearCart());
   }, [cart, data]);
 
   return (
@@ -33,7 +35,7 @@ const Success = () => {
         justifyContent: "center",
       }}
     >
-      {`Thank you! Your order is being prepared... Order total ${cart.total} €`}
+      {`Thank you! Order is being prepared... Order total ${cart.total} €`}
       <Link to="/"><button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button></Link>
     </div>
   );

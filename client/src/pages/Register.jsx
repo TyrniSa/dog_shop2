@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { onRegistration } from "../api/auth";
+import { onRegistration } from "../redux/apiCalls";
 import { mobile } from "../responsive";
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";

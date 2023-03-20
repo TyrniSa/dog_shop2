@@ -18,6 +18,15 @@ const getOrderById = (req, res) => {
   });
 };
 
+//get one order by userid
+const getOrderByUser = (req, res) => {
+  const userid = parseInt(req.params.userid);
+  pool.query(queries.getOrderByUser, [userid], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 //post order
 const addOrder = (req, res) => {
   const { total, userid } = req.body;
@@ -32,5 +41,6 @@ const addOrder = (req, res) => {
 module.exports = {
   getOrders,
   getOrderById,
+  getOrderByUser,
   addOrder
 };

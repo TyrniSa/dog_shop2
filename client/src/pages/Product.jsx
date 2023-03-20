@@ -5,10 +5,10 @@ import styled from "styled-components";
 import Announcement from '../components/Announcement.jsx';
 import Footer from '../components/Footer.jsx';
 import Navbar from '../components/Navbar.jsx';
-import { addProduct } from "../redux/slices/cartSlice.js";
+import { addProduct, increase } from "../redux/slices/cartSlice.js";
 import { publicRequest } from "../requestMethods.js";
 import { mobile } from "../responsive";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div``;
 
@@ -93,6 +93,7 @@ const Product = () => {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -112,11 +113,22 @@ const Product = () => {
     }
   };
 
-  const handleClick = () => {
-    dispatch(
-      addProduct({ ...product, quantity })
-    );
+  const handleClick = (id) => {
+    const cartProduct = cart.products.find((item)=>item.id === id);
+    if(!cartProduct){
+      dispatch(
+        addProduct({ ...product, quantity })
+      );
+    } else {
+      dispatch(increase({id: cartProduct.id, quantity}));
+    }
   };
+
+  // const handleClick = () => {
+  //   dispatch(
+  //     addProduct({ ...product, quantity })
+  //   );
+  // };
 
   return (
     <Container>
@@ -140,7 +152,8 @@ const Product = () => {
               <Amount>{quantity}</Amount>
               <Add onClick={()=>handleQuantity("inc")}/>
             </AmountContainer>
-            <Button onClick={handleClick}>ADD TO CART</Button>
+            <Button onClick={()=>{handleClick(product.id)}}>ADD TO CART</Button>
+            {/* <Button onClick={handleClick}>ADD TO CART</Button> */}
           </AddContainer>
         </InfoContainer>
       </Wrapper>
