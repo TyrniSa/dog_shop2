@@ -69,7 +69,6 @@ const Dashboard = () => {
       await logoutUser();
       localStorage.removeItem('persist:root');
     } catch (error) {
-      console.log(error.response);
     }
   };
 
@@ -82,8 +81,6 @@ const Dashboard = () => {
     };
     getOrders();
   }, []);
-
-  console.log(orders)
 
   return (
     <div>
@@ -104,28 +101,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-// const Dashboard = () => {
-
-//   const logout = async () => {
-//     try {
-//       await logoutUser();
-//       localStorage.removeItem('persist:root');
-//     } catch (error) {
-//       console.log(error.response);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <div>
-//         <h1>Dashboard</h1>
-//         <button onClick={() => logout()} className='btn btn-primary'>
-//           Logout
-//         </button>
-//       </div>
-//     </div>
-//   )
-// };
-
-// export default Dashboard;

@@ -107,10 +107,6 @@ const Navbar = () => {
       <Wrapper>
         <Left>
           <NavbarLink to="/products"><MenuItem>DOGS</MenuItem></NavbarLink>
-          <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
         </Left>
         <Center><NavbarLink to="/"><Logo>DOG STORE</Logo></NavbarLink></Center>
         <Right>

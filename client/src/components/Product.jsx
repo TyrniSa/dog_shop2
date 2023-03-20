@@ -1,6 +1,8 @@
 import { SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material"
+import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { addProduct, increase } from "../redux/slices/cartSlice"
 
 const Info = styled.div`
 opacity: 0;
@@ -69,11 +71,26 @@ const IconLink = styled(Link)`
 
 
 const Product = ({ item }) => {
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+
+  const handleClick = (id) => {
+    const quantity = 1;
+    const cartProduct = cart.products.find((item)=>item.id === id);
+    if(!cartProduct){
+      dispatch(
+        addProduct({ ...item, quantity })
+      );
+    } else {
+      dispatch(increase({id: cartProduct.id, quantity}));
+    }
+  };
+  
   return (
     <Container>
       <Image src={item.img} />
       <Info>
-        <Icon>
+        <Icon onClick={()=>{handleClick(item.id)}}>
           <ShoppingCartOutlined />
         </Icon>
         <Icon>

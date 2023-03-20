@@ -37,7 +37,10 @@ const TopButton = styled.button`
   padding: 10px;
   font-weight: 600;
   cursor: pointer;
-  background-color: "transparent";
+  border: ${(props) => props.type === "filled" && "none"};
+  background-color: ${(props) =>
+    props.type === "filled" ? "black" : "transparent"};
+     width: ${(props) => props.type === "filled" && "100%"};
 `;
 
 const Bottom = styled.div`
@@ -163,8 +166,8 @@ margin-top:10px;
 `;
 
 const ButtonLink = styled(Link)`
- color:black;
  text-decoration: none;
+ color: ${(props) => props.type === "filled" ? "white" : "black"};
 &:hover,
 &:focus{
     color: #199494;
@@ -175,6 +178,7 @@ const ButtonLink = styled(Link)`
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.currentUser);
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
@@ -190,8 +194,8 @@ const Cart = () => {
           tokenId: stripeToken.id,
           amount: 400,
         });
-        navigate("/success", {state: {stripeData: res.data, cart: cart }});
-      } catch {}
+        navigate("/success", { state: { stripeData: res.data, cart: cart } });
+      } catch { }
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart, navigate]);
@@ -222,19 +226,19 @@ const Cart = () => {
                       <b>Age:</b> {product.age}
                     </DogAge>
                   </Details>
-                  
+
                 </ProductDetail>
                 <PriceDetail>
-                
-                  <ProductAmountContainer>   
-              <Remove onClick={()=>{product.quantity > 0 && dispatch(decrease({id: product.id}))}}/>
-              <ProductAmount>{product.quantity}</ProductAmount>
-              <Add onClick={()=>{dispatch(increase({id: product.id}))}}/>
+
+                  <ProductAmountContainer>
+                    <Remove onClick={() => { product.quantity > 0 && dispatch(decrease({ id: product.id })) }} />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <Add onClick={() => { dispatch(increase({ id: product.id })) }} />
                   </ProductAmountContainer>
                   <ProductPrice>{product.price * product.quantity} €</ProductPrice>
-                  <RemoveButton onClick={()=>{dispatch(removeProduct(product.id))}}>REMOVE</RemoveButton>
+                  <RemoveButton onClick={() => { dispatch(removeProduct(product.id)) }}>REMOVE</RemoveButton>
                 </PriceDetail>
-                
+
               </Product>
             ))}
             <Hr />
@@ -245,19 +249,21 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>{cart.total} €</SummaryItemPrice>
             </SummaryItem>
-            <StripeCheckout
-              name="DOG STORE"
-              image="https://imgur.com/rTtvFOi.png"
-              billingAddress
-              shippingAddress
-              description={`Your total is ${cart.total} €`}
-              amount={cart.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-            >
-              <Button>CHECKOUT NOW</Button>
-            </StripeCheckout>
-              <ClearButton onClick={()=>{dispatch(clearCart())}}>CLEAR CART</ClearButton>
+            {user ?
+              (<StripeCheckout
+                name="DOG STORE"
+                image="https://imgur.com/rTtvFOi.png"
+                billingAddress
+                shippingAddress
+                description={`Your total is ${cart.total} €`}
+                amount={cart.total * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <Button>CHECKOUT NOW</Button>
+              </StripeCheckout>) : (
+                <TopButton type="filled"><ButtonLink type="filled" to="/login">LOGIN BEFORE ORDERING</ButtonLink></TopButton>)}
+            <ClearButton onClick={() => { dispatch(clearCart()) }}>CLEAR CART</ClearButton>
           </Summary>
         </Bottom>
       </Wrapper>
