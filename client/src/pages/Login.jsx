@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { onLogin } from "../api/auth";
-import { useDispatch } from "react-redux";
-import { authenticateUser } from "../redux/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { mobile } from "../responsive";
+import { login } from "../redux/apiCalls";
+import { Link } from 'react-router-dom';
+import Announcement from "../components/Announcement";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const Container = styled.div`
   width: 100vw;
@@ -24,7 +27,7 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: white;
-  ${mobile({width: "75%"})};
+  ${mobile({ width: "75%" })};
 `;
 
 const Title = styled.h1`
@@ -59,15 +62,15 @@ const Button = styled.button`
 &:hover{
   background-color: #48a7a7;
   transform: scale(1.025);
+  
+  &:disabled{
+    color: #1a3b2b;
+    cursor: not-allowed;
+  }
 }
 `;
 
-const Msg = styled.div`
-  color: red;
-  margin: 10px 0px;
-`;
-
-const Link = styled.a`
+const RegLink = styled(Link)`
   margin: 5px 0px;
   font-size: 12px;
   text-decoration: underline;
@@ -79,62 +82,50 @@ const Link = styled.a`
 }
 `;
 
+const Error = styled.span`
+  color: red;
+`;
+
 const Login = () => {
-  const [values, setValues] = useState({
-    email: '',
-    password: ''
-  });
 
-  const [error, setError] = useState(false);
-
-  const onChange = (e) => {
-    setValues({...values, [e.target.name]: e.target.value});
-  };
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
 
-  const onSubmit = async (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
-    try {
-      await onLogin(values);
-      dispatch(authenticateUser());
-      localStorage.setItem('isAuth', 'true');
-    } catch (error) {
-      console.log(error.response.data.errors[0].msg);
-      setError(error.response.data.errors[0].msg);
-    };
-
+    login(dispatch, { email, password });
   };
-
   return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form onSubmit={(e) => onSubmit(e)}>
-          <Input
-          onChange={(e) => onChange(e)}
-          type='email'
-          id="email"
-          name="email"
-          value={values.email}
-          placeholder='email'
-          required
-          />
-          <Input
-          onChange={(e) => onChange(e)}
-          type='password'
-          id="password"
-          name="password"
-          value={values.password}
-          placeholder='password'
-          required
-          />
-          <Button type='submit'>LOGIN</Button>
-          <Msg>{error}</Msg>
-          <Link>CREATE A NEW ACCOUNT</Link>
-        </Form>
-      </Wrapper>
-    </Container>
+    <div>
+      <Announcement />
+      <Navbar />
+      <Container>
+        <Wrapper>
+          <Title>SIGN IN</Title>
+          <Form>
+            <Input
+              placeholder="email"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Button onClick={handleClick} disabled={isFetching}>
+              LOGIN
+            </Button>
+            {error && <Error>Wrong email or password</Error>}
+            <RegLink to="/register">CREATE A NEW ACCOUNT</RegLink>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer />
+    </div>
   );
 };
 

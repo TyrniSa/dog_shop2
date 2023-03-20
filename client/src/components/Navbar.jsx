@@ -5,6 +5,7 @@ import Badge from '@mui/material/Badge';
 import { mobile } from "../responsive";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { logoutUser } from "../redux/apiCalls"
 
 const Container = styled.div`
   height: 60px;
@@ -71,23 +72,69 @@ const NavbarLink = styled(Link)`
     color: #255a5a;
 };`
 
+const Button = styled.button`
+ color:black;
+ text-decoration: none;
+ background-color: transparent;
+ border: none;
+&:hover,
+&:focus{
+    color: #199494;
+    background-color: transparent;
+ border: none;
+}
+&:active{
+    color: #255a5a;
+    background-color: transparent;
+ border: none;
+};`
+
+const logout = async () => {
+  try {
+    await logoutUser();
+    localStorage.removeItem('persist:root');
+    window.location.reload();
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+
 const Navbar = () => {
-  const quantity = useSelector(state=>state.cart.quantity)
+  const user = useSelector((state) => state.user.currentUser);
+  const quantity = useSelector(state => state.cart.quantity)
   return (
     <Container>
       <Wrapper>
         <Left>
-        <NavbarLink to="/products"><MenuItem>DOGS</MenuItem></NavbarLink>
+          <NavbarLink to="/products"><MenuItem>DOGS</MenuItem></NavbarLink>
           <SearchContainer>
-            <Input placeholder="Search"/>
-            <Search style={{color: "gray", fontSize: 16}}/>
+            <Input placeholder="Search" />
+            <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
         <Center><NavbarLink to="/"><Logo>DOG STORE</Logo></NavbarLink></Center>
         <Right>
-        <NavbarLink to="/register"><MenuItem>REGISTER</MenuItem></NavbarLink>
-        <NavbarLink to="/login"><MenuItem>SIGN IN</MenuItem></NavbarLink>
-        <NavbarLink to="/cart"><MenuItem>
+          {user ? (
+            <div>
+              <NavbarLink to='/dashboard' className='mx-3'>
+                <span>DASHBOARD</span>
+              </NavbarLink>
+              <Button onClick={() => logout()} className='btn btn-primary'>
+                LOGOUT
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <NavbarLink to='/login'>
+                <span>LOGIN</span>
+              </NavbarLink>
+
+              <NavbarLink to='/register' className='mx-3'>
+                <span>REGISTER</span>
+              </NavbarLink>
+            </div>
+          )}
+          <NavbarLink to="/cart"><MenuItem>
             <Badge color="success" badgeContent={quantity}>
               <ShoppingCartOutlined />
             </Badge>

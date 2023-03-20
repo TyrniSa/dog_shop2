@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Announcement from '../components/Announcement.jsx';
 import Footer from '../components/Footer.jsx';
 import Navbar from '../components/Navbar.jsx';
-import { addProduct } from "../redux/slices/cartRedux.js";
+import { addProduct } from "../redux/slices/cartSlice.js";
 import { publicRequest } from "../requestMethods.js";
 import { mobile } from "../responsive";
 import { useDispatch } from "react-redux";

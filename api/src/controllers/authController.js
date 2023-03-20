@@ -88,7 +88,11 @@ const loginUser = async (req, res) => {
       })
       .json({
         success: true,
-        message: 'Login succesful'
+        message: 'Login succesful',
+        id: user.id,
+        email: user.email,
+        created_at: user.created_at,
+        accessToken: token
       });
   } catch (error) {
     console.log(error.message)

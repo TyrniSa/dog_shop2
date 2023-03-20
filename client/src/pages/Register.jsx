@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { useState } from "react";
 import { onRegistration } from "../api/auth";
 import { mobile } from "../responsive";
+import Announcement from "../components/Announcement";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 
 const Container = styled.div`
@@ -102,6 +105,9 @@ const Register = () => {
   };
 
   return (
+    <div>
+    <Announcement />
+    <Navbar />
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
@@ -136,6 +142,8 @@ const Register = () => {
         </Form>
       </Wrapper>
     </Container>
+    <Footer />
+    </div>
   );
 };
 

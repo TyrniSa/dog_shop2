@@ -10,17 +10,19 @@ import Dashboard from './pages/dashboard';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Success from './pages/Success.jsx';
 
-const PrivateRoutes = () => {
-  const { isAuth } = useSelector(state => state.auth);
-  return <> {isAuth ? <Outlet /> : <Navigate to="/" />} </>
-};
 
 const RestrictedRoutes = () => {
-  const { isAuth } = useSelector(state => state.auth);
-  return <> {!isAuth ? <Outlet /> : <Navigate to="/" />} </>
+  const user = useSelector((state) => state.user.currentUser);
+  return <> {!user ? <Outlet /> : <Navigate to="/" />} </>
+};
+
+const PrivateRoutes = () => {
+  const user = useSelector((state) => state.user.currentUser);
+  return <> {user ? <Outlet /> : <Navigate to="/" />} </>
 };
 
 const App = () => {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -40,45 +42,5 @@ const App = () => {
     </BrowserRouter>
   )
 };
-
-// import {
-//   BrowserRouter,
-//   Routes,
-//   Navigate,
-//   Route,
-//   Outlet,
-// } from 'react-router-dom';
-// import Home from './pages/home';
-// import Dashboard from './pages/dashboard';
-
-// const PrivateRoutes = () => {
-//   const {isAuth} = useSelector(state => state.auth);
-//   return <> {isAuth ? <Outlet /> : <Navigate to="/login" />} </>
-// };
-
-// const RestrictedRoutes = () => {
-//   const {isAuth} = useSelector(state => state.auth);
-//   return <> {!isAuth ? <Outlet /> : <Navigate to="/dashboard" />} </>
-// };
-
-// const App = () => {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         <Route path='/' element={<Home />} />
-
-//         <Route element={<PrivateRoutes />}>
-//           <Route path='/dashboard' element={<Dashboard />} />
-//         </Route>
-
-//         <Route element={<RestrictedRoutes />}>
-//           <Route path='/register' element={<Register />} />
-//           <Route path='/login' element={<Login />} />
-//         </Route>
-
-//       </Routes>
-//     </BrowserRouter>
-//   )
-// };
 
 export default App;
