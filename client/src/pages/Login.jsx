@@ -9,13 +9,14 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Container = styled.div`
+  margin-top:20px;
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(164, 224, 216, 0.5)
     ),
-    url("https://viipurinkoirat.fi/sites/default/files/styles/fullsize/public/field/kuvat/miron-10.jpg?itok=R4LkV5A4")
+    url("https://imgur.com/yD4r8xp.jpg")
       center;
   background-size: cover;
   display: flex;
@@ -66,8 +67,8 @@ const Button = styled.button`
   &:disabled{
     color: #1a3b2b;
     cursor: not-allowed;
-  }
-}
+  };
+};
 `;
 
 const RegLink = styled(Link)`
@@ -79,7 +80,7 @@ const RegLink = styled(Link)`
 
   &:hover{
   color: #48a7a7;
-}
+};
 `;
 
 const Error = styled.span`
@@ -97,6 +98,7 @@ const Login = () => {
     e.preventDefault();
     login(dispatch, { email, password });
   };
+
   return (
     <div>
       <Announcement />

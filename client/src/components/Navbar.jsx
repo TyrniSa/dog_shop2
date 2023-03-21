@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Search, ShoppingCartOutlined } from '@mui/icons-material';
+import { ShoppingCartOutlined } from '@mui/icons-material';
 import Badge from '@mui/material/Badge';
 import { mobile } from "../responsive";
 import { Link } from 'react-router-dom';
@@ -17,62 +17,54 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ${mobile({ padding: "10px 0px" })}
-`
+  ${mobile({ padding: "10px 0px" })};
+`;
 const Left = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-`
-
-const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
-  display: flex;
-  align-items: center;
-  margin-left: 25px;
-  padding: 5px;
-`
-
-const Input = styled.input`
-border: none;
-${mobile({ width: "55px" })}
-`
+`;
 
 const Center = styled.div`
   flex: 1;
   text-align: center;
-`
+`;
 const Logo = styled.h1`
   font-weight: bold;
-  ${mobile({ fontSize: "22px" })}
-`
+  ${mobile({ fontSize: "22px" })};
+`;
 
 const Right = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  ${mobile({ flex: 2, justifyContent: "center" })}
-`
+  ${mobile({ flex: 2, justifyContent: "center" })};
+`;
+
 const MenuItem = styled.div`
-  font-size: 14px;
+  font-size: 18px;
   cursor: pointer;
   margin-left: 25px;
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
-`
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })};
+`;
 
 const NavbarLink = styled(Link)`
  color:black;
  text-decoration: none;
+ margin-left: 25px;
 &:hover,
 &:focus{
     color: #199494;
 }
 &:active{
     color: #255a5a;
-};`
+}
+${mobile({ fontSize: "12px", marginLeft: "10px" })};
+`;
 
 const Button = styled.button`
+font-size: 16px;
  color:black;
  text-decoration: none;
  background-color: transparent;
@@ -82,12 +74,13 @@ const Button = styled.button`
     color: #199494;
     background-color: transparent;
  border: none;
-}
+};
 &:active{
     color: #255a5a;
     background-color: transparent;
  border: none;
-};`
+};
+`;
 
 const logout = async () => {
   try {
@@ -101,7 +94,7 @@ const logout = async () => {
 
 const Navbar = () => {
   const user = useSelector((state) => state.user.currentUser);
-  const quantity = useSelector(state => state.cart.quantity)
+  const quantity = useSelector(state => state.cart.quantity);
   return (
     <Container>
       <Wrapper>

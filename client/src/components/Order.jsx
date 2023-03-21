@@ -1,12 +1,13 @@
 
-import styled from "styled-components"
+import styled from "styled-components";
+
 const Container = styled.div`
 flex:1;
 margin: 5px;
 min-width: 200px;
 display: flex;
 justify-content: flex-start;
-`
+`;
 
 const Info = styled.div`
 width: 50%;

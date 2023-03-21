@@ -15,25 +15,24 @@ const Container = styled.div``;
 const Wrapper = styled.div`
 padding: 50px;
 display: flex;
-${mobile({ padding: "10px", flexDirection:"column" })}
+${mobile({ padding: "10px", flexDirection: "column" })}
 `;
 
 const ImgContainer = styled.div`
 flex:1;
-
 `;
 
 const Image = styled.img`
 width:100%;
-height:90vh;
+height:40vh;
 object-fit: cover;
-${mobile({ height: "40vh" })}
+${mobile({ height: "40vh" })};
 `;
 
 const InfoContainer = styled.div`
 flex:1;
 padding: 0px 50px;
-${mobile({ padding: "10px" })}
+${mobile({ padding: "10px" })};
 `;
 
 const Title = styled.h1`
@@ -54,7 +53,7 @@ width: 50%;
 display: flex;
 align-items: center;
 justify-content: space-between;
-${mobile({ width: "100%" })}
+${mobile({ width: "100%" })};
 `;
 
 const AmountContainer = styled.div`
@@ -83,7 +82,7 @@ const Button = styled.button`
 
   &:hover{
     background-color: #c2e0da;
-  }
+  };
 `;
 
 
@@ -100,7 +99,7 @@ const Product = () => {
       try {
         const res = await publicRequest.get("/products/" + id);
         setProduct(res.data[0]);
-      } catch {}
+      } catch { };
     };
     getProduct();
   }, [id]);
@@ -110,18 +109,18 @@ const Product = () => {
       quantity > 1 && setQuantity(quantity - 1);
     } else {
       setQuantity(quantity + 1);
-    }
+    };
   };
 
   const handleClick = (id) => {
-    const cartProduct = cart.products.find((item)=>item.id === id);
-    if(!cartProduct){
+    const cartProduct = cart.products.find((item) => item.id === id);
+    if (!cartProduct) {
       dispatch(
         addProduct({ ...product, quantity })
       );
     } else {
-      dispatch(increase({id: cartProduct.id, quantity}));
-    }
+      dispatch(increase({ id: cartProduct.id, quantity }));
+    };
   };
 
   return (
@@ -135,24 +134,24 @@ const Product = () => {
         <InfoContainer>
           <Title>{product.name}</Title>
           <Desc>
-            Sex: {product.sex}<br/>
-            Age: {product.age}<br/>
+            Sex: {product.sex}<br />
+            Age: {product.age}<br />
             {product.description}
-            </Desc>
+          </Desc>
           <Price>{product.price} €</Price>
           <AddContainer>
             <AmountContainer>
-              <Remove onClick={()=>handleQuantity("dec")} />
+              <Remove onClick={() => handleQuantity("dec")} />
               <Amount>{quantity}</Amount>
-              <Add onClick={()=>handleQuantity("inc")}/>
+              <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button onClick={()=>{handleClick(product.id)}}>ADD TO CART</Button>
+            <Button onClick={() => { handleClick(product.id) }}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
       <Footer />
     </Container>
   )
-}
+};
 
 export default Product;

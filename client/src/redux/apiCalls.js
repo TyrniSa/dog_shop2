@@ -8,13 +8,13 @@ export const login = async (dispatch, user) => {
     dispatch(loginSuccess(res.data));
   } catch (err) {
     dispatch(loginFailure());
-  }
+  };
 };
 
 export async function logoutUser() {
-  return await  publicRequest.get('/auth/logout')
+  return await publicRequest.get('/auth/logout');
 };
 
 export async function onRegistration(registrationData) {
-  return await publicRequest.post('/auth/register', registrationData)
+  return await publicRequest.post('/auth/register', registrationData);
 };

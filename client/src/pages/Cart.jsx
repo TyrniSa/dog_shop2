@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
 padding: 20px;
-${mobile({ padding: "10px" })}
+${mobile({ padding: "10px" })};
 `;
 
 const Title = styled.h1`
@@ -46,7 +46,7 @@ const TopButton = styled.button`
 const Bottom = styled.div`
 display: flex;
 justify-content: space-between;
-${mobile({ flexDirection: "column" })}
+${mobile({ flexDirection: "column" })};
 `;
 
 const Info = styled.div`
@@ -65,7 +65,8 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  height: 200px;
+  width: 150px;
+  margin-bottom:10px;
 `;
 
 const Details = styled.div`
@@ -226,14 +227,13 @@ const Cart = () => {
                       <b>Age:</b> {product.age}
                     </DogAge>
                   </Details>
-
                 </ProductDetail>
                 <PriceDetail>
 
                   <ProductAmountContainer>
                     <Remove onClick={() => { product.quantity > 0 && dispatch(decrease({ id: product.id })) }} />
                     <ProductAmount>{product.quantity}</ProductAmount>
-                    <Add onClick={() => { dispatch(increase({ id: product.id })) }} />
+                    <Add onClick={() => { dispatch(increase({ id: product.id, quantity: 1 })) }} />
                   </ProductAmountContainer>
                   <ProductPrice>{product.price * product.quantity} €</ProductPrice>
                   <RemoveButton onClick={() => { dispatch(removeProduct(product.id)) }}>REMOVE</RemoveButton>
@@ -270,6 +270,6 @@ const Cart = () => {
       <Footer />
     </Container>
   )
-}
+};
 
 export default Cart;

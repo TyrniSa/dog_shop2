@@ -7,6 +7,7 @@ import {
   Room,
   Twitter,
 } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
@@ -77,15 +78,29 @@ const ContactItem = styled.div`
   align-items: center;
 `;
 
+const FooterLink = styled(Link)`
+ color:black;
+ text-decoration: none;
+&:hover,
+&:focus{
+    color: #199494;
+}
+&:active{
+    color: #255a5a;
+};`
+
 const Footer = () => {
   return (
     <Container>
       <Left>
         <Logo>DOG STORE</Logo>
         <Desc>
-          Blablabla description for this practice. There are many variations of passages of Lorem Ipsum available, but
-          the majority have suffered alteration in some form, by injected
-          humour, or randomised words which don’t look even slightly believable.
+          This is a practise project made by <b><FooterLink to="https://tyrnisarkka.netlify.app/" target="_blank">Tyrni Särkkä </FooterLink></b>
+           for Codecademys Full-Stack Engineering course. The objective for this project was to build a functioning e-commerce application
+          with registering possibility, cart functions and checkout, using PERN stack.<br/>
+          While not a real app, this page is showing actual photos of a local dog rescues dogs, 
+          <b><FooterLink to="https://viipurinkoirat.fi/" target="_blank"> please visit them</FooterLink></b> to
+          learn more about these pups needing home.
         </Desc>
         <SocialContainer>
           <SocialIcon>
@@ -103,12 +118,14 @@ const Footer = () => {
         </SocialContainer>
       </Left>
       <Center>
-        <Title>Useful Links</Title>
+        <Title>Linktree</Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Girls</ListItem>
-          <ListItem>Boys</ListItem>
+          <ListItem><FooterLink to="/">Home</FooterLink></ListItem>
+          <ListItem><FooterLink to="/dashboard">My Account</FooterLink></ListItem>
+          <ListItem><FooterLink to="/login">Login</FooterLink></ListItem>
+          <ListItem><FooterLink to="/register">Register</FooterLink></ListItem>
+          <ListItem><FooterLink to="/products">Dogs</FooterLink></ListItem>
+          <ListItem><FooterLink to="https://tyrnisarkka.netlify.app/" target="_blank">About me</FooterLink></ListItem>
         </List>
       </Center>
       <Right>

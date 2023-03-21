@@ -8,13 +8,14 @@ import Footer from "../components/Footer";
 
 
 const Container = styled.div`
+  margin-top:20px;
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(164, 224, 216, 0.5)
     ),
-    url("https://viipurinkoirat.fi/sites/default/files/styles/fullsize/public/field/kuvat/polkka-6.jpg?itok=3vjGSg1h")
+    url("https://imgur.com/HdqSj5s.jpg")
       center;
   background-size: cover;
   display: flex;
@@ -26,7 +27,7 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: white;
-  ${mobile({width: "75%"})};
+  ${mobile({ width: "75%" })};
 `;
 
 const Title = styled.h1`
@@ -69,7 +70,7 @@ const Button = styled.button`
   &:hover{
     background-color: #48a7a7;
     transform: scale(1.025);
-  }
+  };
 `;
 
 const Msg = styled.div`
@@ -79,11 +80,7 @@ const Msg = styled.div`
 `;
 
 const Register = () => {
-  const [values, setValues] = useState({
-    email: '',
-    password: ''
-  });
-
+  const [values, setValues] = useState({ email: '', password: '' });
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -106,43 +103,43 @@ const Register = () => {
 
   return (
     <div>
-    <Announcement />
-    <Navbar />
-    <Container>
-      <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
-        <Form onSubmit={(e) => onSubmit(e)}>
-          <Input
-            onChange={(e) => onChange(e)}
-            type='email'
-            id="email"
-            name="email"
-            value={values.email}
-            placeholder='email'
-            required
-          />
-          <Input
-            onChange={(e) => onChange(e)}
-            type='password'
-            id="password"
-            name="password"
-            value={values.password}
-            placeholder='password'
-            required
-          />
-          <SubmitContainer>
-          <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
-          </Agreement>
-          <Button type='submit' >CREATE</Button>
-          <div style={{ color: 'red', margin: '10px 0px'}}>{error}</div>
-          <Msg>{success}</Msg>
-          </SubmitContainer>
-        </Form>
-      </Wrapper>
-    </Container>
-    <Footer />
+      <Announcement />
+      <Navbar />
+      <Container>
+        <Wrapper>
+          <Title>CREATE AN ACCOUNT</Title>
+          <Form onSubmit={(e) => onSubmit(e)}>
+            <Input
+              onChange={(e) => onChange(e)}
+              type='email'
+              id="email"
+              name="email"
+              value={values.email}
+              placeholder='email'
+              required
+            />
+            <Input
+              onChange={(e) => onChange(e)}
+              type='password'
+              id="password"
+              name="password"
+              value={values.password}
+              placeholder='password'
+              required
+            />
+            <SubmitContainer>
+              <Agreement>
+                By creating an account, I consent to the processing of my personal
+                data in accordance with the <b>PRIVACY POLICY</b>
+              </Agreement>
+              <Button type='submit' >CREATE</Button>
+              <div style={{ color: 'red', margin: '10px 0px' }}>{error}</div>
+              <Msg>{success}</Msg>
+            </SubmitContainer>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer />
     </div>
   );
 };

@@ -46,7 +46,7 @@ const deleteCart = (req, res) => {
   });
 };
 
-//add cartitem to a cart
+//add cartitem to a cart, mostly to test api, this was done a bit differently in client
 const addProductToCart = (req, res) => {
   const cartid = parseInt(req.params.id);
   const { productid, qty } = req.body;
@@ -58,7 +58,7 @@ const addProductToCart = (req, res) => {
   });
 };
 
-//put cartitem quantity in an existing cartitem
+//put cartitem quantity in an existing cartitem, mostly to test api, this was done a bit differently in client
 const editProductQtyInCart = (req, res) => {
   const cartid = parseInt(req.params.cartid);
   const id = parseInt(req.params.id);
@@ -77,7 +77,7 @@ const editProductQtyInCart = (req, res) => {
   });
 };
 
-//delete cartitem
+//delete cartitem, mostly to test api, this was done a bit differently in client
 const deleteProductFromCart = (req, res) => {
   const cartid = parseInt(req.params.cartid);
   const id = parseInt(req.params.id);
@@ -95,7 +95,7 @@ const deleteProductFromCart = (req, res) => {
   });
 };
 
-//"checkout" no existing checkout, this method counts a total to cartitems and posts a new order to
+//"checkout" to test api, this method counts a total to cartitems and posts a new order to
 //orders -table
 const checkout = (req, res) => {
   const id = parseInt(req.params.id);

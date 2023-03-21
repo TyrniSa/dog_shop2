@@ -18,7 +18,7 @@ align-items: center;
 justify-content: center;
 transition: all 0.5s ease;
 cursor: pointer;
-`
+`;
 
 const Container = styled.div`
 flex:1;
@@ -33,13 +33,13 @@ position: relative;
 
 &:hover ${Info}{
   opacity: 1;
-}
-`
+};
+`;
 
 const Image = styled.img`
 height:85%;
 z-index:2;
-`
+`;
 
 const Icon = styled.div`
 width: 40px;
@@ -55,8 +55,8 @@ transition:all 0.5s ease;
 &:hover{
   background-color: #e9f5f5;
   transform: scale(1.1);
-}
-`
+};
+`;
 
 const IconLink = styled(Link)`
  color:black;
@@ -67,7 +67,8 @@ const IconLink = styled(Link)`
 }
 &:active{
     color: #255a5a;
-};`
+};
+`;
 
 
 const Product = ({ item }) => {
@@ -76,29 +77,29 @@ const Product = ({ item }) => {
 
   const handleClick = (id) => {
     const quantity = 1;
-    const cartProduct = cart.products.find((item)=>item.id === id);
-    if(!cartProduct){
+    const cartProduct = cart.products.find((item) => item.id === id);
+    if (!cartProduct) {
       dispatch(
         addProduct({ ...item, quantity })
       );
     } else {
-      dispatch(increase({id: cartProduct.id, quantity}));
-    }
+      dispatch(increase({ id: cartProduct.id, quantity }));
+    };
   };
-  
+
   return (
     <Container>
       <Image src={item.img} />
       <Info>
-        <Icon onClick={()=>{handleClick(item.id)}}>
+        <Icon onClick={() => { handleClick(item.id) }}>
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-        <IconLink to={`/product/${item.id}`}><SearchOutlined /></IconLink>
+          <IconLink to={`/product/${item.id}`}><SearchOutlined /></IconLink>
         </Icon>
       </Info>
     </Container>
   )
-}
+};
 
-export default Product
+export default Product;

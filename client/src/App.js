@@ -25,9 +25,9 @@ const PrivateRoutes = () => {
 
 const App = () => {
 
-  const {products } = useSelector((state)=> state.cart)
+  const { products } = useSelector((state) => state.cart)
   const dispatch = useDispatch();
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(calculateTotals());
   }, [products]);
 

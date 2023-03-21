@@ -27,7 +27,6 @@ passport.use(
       let user = { id: rows[0].id, email: rows[0].email };
       return await done(null, user);
     } catch (error) {
-      console.log(error.message);
       done(null, false);
     }
   })

@@ -1,6 +1,5 @@
 
-import { logoutUser } from "../redux/apiCalls"; 
-
+import { logoutUser } from "../redux/apiCalls";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import Announcement from "../components/Announcement";
@@ -8,17 +7,18 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Order from "../components/Order";
+import { publicRequest } from "../requestMethods";
 
 const Container = styled.div`
+  margin-top:20px;
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(164, 224, 216, 0.5)
     ),
-    url("https://viipurinkoirat.fi/sites/default/files/styles/thumbnail/public/field/kuvat/tara-2022-12-20-153.jpg?itok=5OB8Gyk0")
+    url("https://i.imgur.com/t3IizZQ.jpg")
       center;
   background-size: cover;
   display: flex;
@@ -56,28 +56,29 @@ const Button = styled.button`
   &:disabled{
     color: #1a3b2b;
     cursor: not-allowed;
-  }
-}
+  };
+};
 `;
 
 const Dashboard = () => {
   const user = useSelector((state) => state.user.currentUser);
   const [orders, setOrders] = useState([]);
 
-    const logout = async () => {
+  const logout = async () => {
     try {
       await logoutUser();
       localStorage.removeItem('persist:root');
+      window.location.reload();
     } catch (error) {
-    }
+    };
   };
 
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/orders/user/"+ user.id);
+        const res = await publicRequest.get(`/orders/user/${user.id}`);
         setOrders(res.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     getOrders();
   }, []);
@@ -91,8 +92,8 @@ const Dashboard = () => {
           <Title>{user.email}</Title>
           {orders.map((item) => <Order item={item} key={item.id} />)}
           <Button onClick={() => logout()}>
-              LOGOUT
-            </Button>
+            LOGOUT
+          </Button>
         </Wrapper>
       </Container>
       <Footer />

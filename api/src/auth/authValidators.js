@@ -20,7 +20,7 @@ const emailExists = check('email').custom(async (email) => {
   }
 });
 
-//login validation
+//login validation, ended up using another method for login
 const loginFields = check('email').custom(async (email, { req }) => {
   const user = await db.query(queries.emailExists, [email])
   if (!user.rows.length) {
