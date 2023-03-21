@@ -28,6 +28,8 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   width: 75%;
+  height: 90%;
+  overflow: scroll;
   padding: 20px;
   background-color: white;
   ${mobile({ width: "75%", height: "90%", overflow: "scroll" })};

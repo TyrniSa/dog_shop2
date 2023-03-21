@@ -27,11 +27,12 @@ transition: all 0.5s ease;
 `
 
 const Order = ({ item }) => {
+  const date = parseInt(item.created_at.slice(0,10).substr(8, 2));
   return (
     <Container>
       <Info>
             Order id: {item.id} <br />
-            Order date: {item.created_at.slice(0,10)} <br /> 
+            Order date: {item.created_at.slice(0,8)}{date+1} <br /> 
             Order status: {item.status}<br />
             Order price: {item.total} €
       </Info>

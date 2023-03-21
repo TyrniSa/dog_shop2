@@ -19,10 +19,10 @@ const Success = () => {
           userid: currentUser.id,
           total: cart.total,
         });
+        dispatch(clearCart());
       } catch { };
     };
     data && createOrder();
-    dispatch(clearCart());
   }, [cart, data]);
 
   return (
