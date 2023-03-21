@@ -31,7 +31,7 @@ const Center = styled.div`
 `;
 const Logo = styled.h1`
   font-weight: bold;
-  ${mobile({ fontSize: "22px" })};
+  ${mobile({ fontSize: "18px" })};
 `;
 
 const Right = styled.div`
@@ -69,6 +69,7 @@ font-size: 16px;
  text-decoration: none;
  background-color: transparent;
  border: none;
+ ${mobile({ fontSize: "12px"})};
 &:hover,
 &:focus{
     color: #199494;
